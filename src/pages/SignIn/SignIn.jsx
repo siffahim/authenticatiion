@@ -18,7 +18,7 @@ const SignIn = () => {
   };
 
   const handleGoogleSingIn = () => {
-    signInUserWithGoogle();
+    signInUserWithGoogle(navigate, location);
   };
   return (
     <>

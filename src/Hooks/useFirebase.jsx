@@ -68,13 +68,16 @@ const useFirebase = () => {
   };
 
   //google sing in
-  const signInUserWithGoogle = () => {
+  const signInUserWithGoogle = (navigate, location) => {
     setIsLoading(true);
     const googleProvider = new GoogleAuthProvider();
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser(result.user);
         setError("");
+
+        const uri = location?.state?.from || "/";
+        navigate(uri);
       })
       .catch((err) => setError(err.message))
       .finally(() => {
