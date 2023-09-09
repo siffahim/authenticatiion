@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
+  const { user, logOutUser } = useAuth();
   return (
     <div className="navbar bg-violet-500 px-6">
       <div className="flex-1">
@@ -17,9 +19,26 @@ const Navbar = () => {
         <Link to="/dashboard" className="btn btn-link text-white no-underline">
           Dashboard
         </Link>
-        <Link to="/sign-in" className="btn btn-link text-white no-underline">
-          Sign In
-        </Link>
+        {user.displayName ? (
+          <button
+            className="btn btn-link no-underline text-white"
+            onClick={logOutUser}
+          >
+            Sign Out
+          </button>
+        ) : (
+          <Link to="/sign-in" className="btn btn-link text-white no-underline">
+            Sign In
+          </Link>
+        )}
+        {user && (
+          <p
+            className="mr-4 text-pink-800 font-medium"
+            style={{ userSelect: "none" }}
+          >
+            {user.displayName}
+          </p>
+        )}
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">

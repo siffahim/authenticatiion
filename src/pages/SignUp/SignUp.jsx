@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
 
-const SignOut = () => {
+const SignUp = () => {
   const [userData, setUserData] = useState({});
+  const { error, register } = useAuth();
 
   const handleInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    let name = e.target.name;
+    let value = e.target.value;
 
     const newUserData = { ...userData };
     newUserData[name] = value;
@@ -15,7 +17,7 @@ const SignOut = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(userData);
+    register(userData.email, userData.password, userData.name);
   };
 
   return (
@@ -54,6 +56,7 @@ const SignOut = () => {
             className="input input-bordered input-primary w-2/4"
             onBlur={handleInput}
           />
+          {error && <p className="text-red-500">{error}</p>}
           <p>
             I haven an account{" "}
             <Link to="/sign-in" className="text-violet-500">
@@ -70,4 +73,4 @@ const SignOut = () => {
   );
 };
 
-export default SignOut;
+export default SignUp;
